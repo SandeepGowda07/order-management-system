@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order - OMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="bi bi-journal-richtext"></i> Magazine OMS
+            </a>
+            <a class="btn btn-outline-light" th:href="@{/products}">
+                <i class="bi bi-arrow-left"></i> Back to Products
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="bi bi-cart-check"></i>
+                            Order: <span th:text="${product.name}">Magazine</span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Validation Rules Info -->
+                        <div class="alert alert-info">
+                            <h6><i class="bi bi-info-circle"></i> Validation Rules:</h6>
+                            <ul class="mb-0 small">
+                                <li><strong>Name:</strong> Letters and spaces only</li>
+                                <li><strong>Phone:</strong> 10 digits, must start with 7, 8, or 9</li>
+                                <li><strong>City/State:</strong> Letters and spaces only</li>
+                                <li><strong>Card Number:</strong> Exactly 16 digits</li>
+                            </ul>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div th:if="${error}" class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <span th:text="${error}">Error message</span>
+                        </div>
+
+                        <!-- Order Form -->
+                        <form th:action="@{/order/{id}(id=${product.id})}" th:object="${order}" method="post">
+
+                            <!-- Product Info -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Product</label>
+                                    <input type="text" class="form-control" th:value="${product.name}" disabled>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Price</label>
+                                    <input type="text" class="form-control text-success fw-bold"
+                                        th:value="'₹' + ${product.price}" disabled>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Quantity</label>
+                                    <input type="number" class="form-control" th:field="*{quantity}" min="1" value="1">
+                                </div>
+                            </div>
+
+                            <hr>
+                            <h5><i class="bi bi-truck"></i> Shipping Details</h5>
+
+                            <div class="mb-3">
+                                <label class="form-label">Your Name *</label>
+                                <input type="text" class="form-control" th:field="*{customerName}" required
+                                    placeholder="Letters only (e.g., John Doe)">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Phone Number *</label>
+                                <input type="text" class="form-control" th:field="*{phone}" required
+                                    placeholder="10 digits starting with 7/8/9 (e.g., 9876543210)">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">City *</label>
+                                    <input type="text" class="form-control" th:field="*{city}" required
+                                        placeholder="Letters only (e.g., Bangalore)">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">State *</label>
+                                    <input type="text" class="form-control" th:field="*{state}" required
+                                        placeholder="Letters only (e.g., Karnataka)">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Credit Card Number *</label>
+                                <input type="text" class="form-control" th:field="*{cardNumber}" required
+                                    placeholder="16 digits (e.g., 1234567890123456)">
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="bi bi-check-circle"></i> Place Order
+                                </button>
+                                <a th:href="@{/products}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

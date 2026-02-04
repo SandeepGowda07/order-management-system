@@ -1,0 +1,25 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+/index.idx
+*.iml
+.idea/
+.project
+.settings
+.classpath
+.factorypath
+bin/
+*.class
+*.log
+*.ctxt
+.DS_Store
+.mvn/
+mvnw
+mvnw.cmd
+.recommenders/
+*.zip
+*.tar.gz
+*.rar
+# Ignore sensitive files
+application-local.properties
+.env
+secret.properties

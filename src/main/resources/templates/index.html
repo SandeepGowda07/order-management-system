@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>User List</title>
+</head>
+
+<body>
+    <h1>Users List</h1>
+    <!-- Display all registered users in a table -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Dob</th>
+                <th>Age</th>
+                <th>Password</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate over the Users list passed from the controller -->
+            <tr th:each="user : ${Users}">
+                <td th:text="${user.userName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.dob}"></td>
+                <td th:text="${user.age}"></td>
+                <td th:text="${user.password}"></td>
+                <!-- Links for editing and deleting users using Thymeleaf URL syntax -->
+                <td> <a th:href="@{/edit/{id}(id=${user.id})}">Edit</a> </td>
+                <td> <a th:href="@{/delete/{id}(id=${user.id})}">Delete</a> </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <a th:href="@{/logout}">
+        <h4>Logout</h4>
+    </a>
+    <a th:href="@{/admin}">
+        <h4>Click here to go back</h4>
+    </a>
+    <!-- Feedback message display -->
+    <h3><span th:utext="${message}"></span></h3>
+</body>
+
+</html>

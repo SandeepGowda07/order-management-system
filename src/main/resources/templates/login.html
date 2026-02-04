@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MagaZone</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <!-- container = centered content with max-width -->
+    <div class="container">
+
+        <!-- row = grid row -->
+        <!-- justify-content-center = horizontally center the column -->
+        <!-- min-vh-100 = minimum height 100% of viewport (full screen) -->
+        <!-- align-items-center = vertically center content -->
+        <div class="row justify-content-center min-vh-100 align-items-center">
+
+            <!-- col-md-5 = 5 of 12 columns on medium+ screens (~42% width) -->
+            <div class="col-md-5">
+
+                <!-- card = white box with border -->
+                <!-- shadow = drop shadow effect -->
+                <div class="card shadow">
+
+                    <!-- card-body = padding inside card -->
+                    <!-- p-5 = extra padding (5 = largest) -->
+                    <div class="card-body p-5">
+
+                        <!-- ========== BRAND/LOGO ========== -->
+                        <div class="text-center mb-4">
+                            <i class="bi bi-journal-richtext text-primary" style="font-size: 3rem;"></i>
+                            <!-- mt-2 = margin-top 2 -->
+                            <h3 class="mt-2">MagaZone</h3>
+                            <p class="text-muted">Sign in to your account</p>
+                        </div>
+
+                        <!-- ========== ERROR MESSAGE ========== -->
+                        <!-- th:if = Thymeleaf conditional - only show if condition true -->
+                        <!-- ${param.error} = URL has ?error parameter (set by Spring Security) -->
+                        <div th:if="${param.error}" class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle"></i> Invalid credentials.
+                        </div>
+
+                        <!-- Show success message after logout -->
+                        <div th:if="${param.logout}" class="alert alert-success">
+                            <i class="bi bi-check-circle"></i> Logged out successfully
+                        </div>
+
+                        <!-- ========== LOGIN FORM ========== -->
+                        <!-- th:action = Thymeleaf URL (handles context path) -->
+                        <!-- Spring Security expects POST to /login with username & password -->
+                        <form th:action="@{/login}" method="post">
+
+                            <!-- mb-3 = margin-bottom 3 -->
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <!-- form-control = styled input field -->
+                                <!-- name="username" is required by Spring Security -->
+                                <input type="text" name="username" class="form-control" placeholder="Enter username"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <!-- name="password" is required by Spring Security -->
+                                <input type="password" name="password" class="form-control" placeholder="Enter password"
+                                    required>
+                            </div>
+
+                            <!-- w-100 = width 100% (full width) -->
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-box-arrow-in-right"></i> Sign In
+                            </button>
+                        </form>
+
+                        <!-- hr = horizontal line -->
+                        <hr>
+
+                        <!-- mb-0 = margin-bottom 0 -->
+                        <p class="text-center mb-0">
+                            Don't have an account?
+                            <!-- th:href = Thymeleaf link -->
+                            <a th:href="@{/register}">Register here</a>
+                        </p>
+
+                        <p class="text-center mt-2">
+                            <a th:href="@{/}" class="text-muted">
+                                <i class="bi bi-arrow-left"></i> Back to Home
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - MagaZone</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container">
+
+        <!-- py-4 = padding top & bottom 4 -->
+        <div class="row justify-content-center min-vh-100 align-items-center py-4">
+
+            <!-- col-md-6 = 6 of 12 columns (50% width) -->
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+
+                        <!-- Brand -->
+                        <div class="text-center mb-4">
+                            <i class="bi bi-journal-richtext text-primary" style="font-size: 3rem;"></i>
+                            <h3 class="mt-2">Join MagaZone</h3>
+                            <p class="text-muted">Create your free account</p>
+                        </div>
+
+                        <!-- ========== MESSAGE DISPLAY ========== -->
+                        <!-- ${message} comes from Controller: model.addAttribute("message", "...") -->
+                        <!-- th:utext = unescaped text (can contain HTML) -->
+                        <div th:if="${message}" class="alert alert-info">
+                            <span th:utext="${message}"></span>
+                        </div>
+
+                        <!-- ========== REGISTER FORM ========== -->
+                        <!-- th:action = where form submits to -->
+                        <!-- th:object = binds form to User object from Controller -->
+                        <form th:action="@{/add}" th:object="${user}" method="post">
+
+                            <!-- Bootstrap row for 2 columns -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Username</label>
+                                    <!-- th:field = binds input to user.userName -->
+                                    <!-- Equivalent to: name="userName" value="${user.userName}" -->
+                                    <input type="text" th:field="*{userName}" class="form-control"
+                                        placeholder="Only letters" maxlength="14" required>
+
+                                    <!-- ========== VALIDATION ERROR ========== -->
+                                    <!-- #fields.hasErrors('userName') = checks if validation failed -->
+                                    <!-- th:errors = displays the error message -->
+                                    <!-- text-danger = red color -->
+                                    <small th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+                                        class="text-danger"></small>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" th:field="*{email}" class="form-control"
+                                        placeholder="your@email.com" required>
+                                    <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                        class="text-danger"></small>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date" th:field="*{dob}" class="form-control" required>
+                                    <small th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"
+                                        class="text-danger"></small>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" th:field="*{password}" class="form-control"
+                                        placeholder="Min 5 chars" required>
+                                    <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                        class="text-danger"></small>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-person-plus"></i> Create Account
+                            </button>
+                        </form>
+
+                        <hr>
+                        <p class="text-center mb-0">
+                            Already have an account? <a th:href="@{/login}">Login here</a>
+                        </p>
+                        <p class="text-center mt-2">
+                            <a th:href="@{/}" class="text-muted">
+                                <i class="bi bi-arrow-left"></i> Back to Home
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
