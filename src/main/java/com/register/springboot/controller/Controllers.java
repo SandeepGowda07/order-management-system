@@ -31,7 +31,7 @@ public class Controllers {
 	 */
 	@GetMapping("/")
 	public String Home() {
-		return "home"; // Returns home.html (new magazine-themed landing page)
+		return "Home"; // Returns Home.html (fix for case-sensitive Linux)
 	}
 
 	/**
