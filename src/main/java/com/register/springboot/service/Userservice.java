@@ -45,20 +45,27 @@ public class Userservice {
 	 * @return true if registration successful, false if under 18.
 	 */
 	public boolean Age(User user) {
-		boolean status = false;
-		String dob = user.getDob();
-		LocalDate birthdate = LocalDate.parse(dob);
-		LocalDate now = LocalDate.now();
-		Period diff = Period.between(birthdate, now);
-		int age = diff.getYears();
-		if (age > 18) {
-			user.setAge(age);
-			user.setRoles("ROLE_USER");
-			user.setPassword(encoder.encode(user.getPassword()));
-			userrepo.save(user);
-			status = true;
+		try {
+			String dob = user.getDob();
+			if (dob == null || dob.isEmpty()) {
+				return false;
+			}
+			LocalDate birthdate = LocalDate.parse(dob);
+			LocalDate now = LocalDate.now();
+			Period diff = Period.between(birthdate, now);
+			int age = diff.getYears();
+			if (age > 18) {
+				user.setAge(age);
+				user.setRoles("ROLE_USER");
+				user.setPassword(encoder.encode(user.getPassword()));
+				userrepo.save(user);
+				return true;
+			}
+		} catch (Exception e) {
+			// Log the error and return false to prevent 500 status
+			System.err.println("Error parsing date or saving user: " + e.getMessage());
 		}
-		return status;
+		return false;
 	}
 
 }

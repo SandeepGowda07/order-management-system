@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.Length;
  * Includes validation for registration fields.
  */
 @Entity
-@Table(name = "User")
+@Table(name = "users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
