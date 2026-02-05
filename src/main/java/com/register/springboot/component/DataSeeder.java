@@ -27,7 +27,7 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (userRepository.count() == 0) {
+        if (userRepository.countByRolesContaining("ROLE_ADMIN") == 0) {
             seedAdminUser();
         }
         if (productRepository.count() == 0) {

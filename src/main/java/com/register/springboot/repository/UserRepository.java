@@ -18,4 +18,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	 * @return User object if found, null otherwise.
 	 */
 	User findByUserName(String userName);
+
+	/**
+	 * Counts users that have a specific role.
+	 * 
+	 * @param role to search for (e.g., "ROLE_ADMIN").
+	 * @return count of users with that role.
+	 */
+	long countByRolesContaining(String role);
 }
