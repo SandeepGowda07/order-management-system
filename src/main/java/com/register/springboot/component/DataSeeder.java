@@ -19,11 +19,32 @@ public class DataSeeder implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private com.register.springboot.repository.UserRepository userRepository;
+
+    @Autowired
+    private org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public void run(String... args) throws Exception {
+        if (userRepository.count() == 0) {
+            seedAdminUser();
+        }
         if (productRepository.count() == 0) {
             seedProducts();
         }
+    }
+
+    private void seedAdminUser() {
+        com.register.springboot.model.User admin = new com.register.springboot.model.User();
+        admin.setUserName("Sandeep");
+        admin.setPassword(passwordEncoder.encode("Sandy123")); // Default password
+        admin.setEmail("sandeep@example.com");
+        admin.setAge(25);
+        admin.setDob("2000-01-01");
+        admin.setRoles("ROLE_ADMIN");
+        userRepository.save(admin);
+        System.out.println("Admin User Seeded: Sandeep / Sandy123");
     }
 
     private void seedProducts() {
